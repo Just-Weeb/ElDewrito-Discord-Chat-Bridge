@@ -1,6 +1,10 @@
 # ElDewrito-Rcon-Python-Example
 Example python client for the ElDewrito server.
 
+```shell
+pip install -r requirements.txt
+```
+
 
 ## Sample commands:
 ```Server.AddBan - Adds to the ban list (does NOT kick anyone)
@@ -80,3 +84,4 @@ Server.VotingDuplicationLevel 1 - Whether duplicate voting options will be allow
 Server.VotingEnabled 1 - Controls whether the map voting system is enabled on this server.
 Server.VotingJsonPath mods/server/voting.json - Voting Json Path
 Server.WebsocketInfo - Display the websocket password for the current server
+```
