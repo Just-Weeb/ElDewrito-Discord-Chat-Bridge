@@ -1,5 +1,3 @@
-#pip install websocket-client
-
 from websocket import create_connection
 
 password = ""
