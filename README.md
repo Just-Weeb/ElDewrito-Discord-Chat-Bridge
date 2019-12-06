@@ -79,4 +79,4 @@ Server.VotePassPercentage 50 - Percentage of players required to vote yes for a 
 Server.VotingDuplicationLevel 1 - Whether duplicate voting options will be allowed.
 Server.VotingEnabled 1 - Controls whether the map voting system is enabled on this server.
 Server.VotingJsonPath mods/server/voting.json - Voting Json Path
-Server.WebsocketInfo - Display the websocket password for the current server```
+Server.WebsocketInfo - Display the websocket password for the current server
