@@ -19,6 +19,7 @@ while True:
     print(n)
     if n == "exit":
         ws.close()
+        exit()
     ws.send(n)
     result =  ws.recv()
     print("Received '%s'" % result)
