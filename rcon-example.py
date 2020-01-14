@@ -1,7 +1,7 @@
 from websocket import create_connection
 
-password = ""
-server = ""
+password = "" #ed server password
+server = "" #ed server address
 port = "11776"
 
 try:
