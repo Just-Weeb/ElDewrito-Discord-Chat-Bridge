@@ -2,17 +2,12 @@
 
 ```shell
 pip3 install -r requirements.txt
+
+python3 discord-chat-bridge.py
 ```
 DISCLAIMER: There is a lot of sensitive information stored in this script and it is intended as a proof of concept. Users will have to  accept all risks when running this.
 
-You will need a discord bot api token and webhook url for the channel you plan on managing your ed server from. In addition you will need your server connection info and rcon credentials. 
-
-To create a webhook for your chat channel please follow:
-https://help.dashe.io/en/articles/2521940-how-to-create-a-discord-webhook-url
-
-You can create a bot and obtain an api token here:
-https://discord.com/developers/applications
-
+You will need a discord bot api token and webhook url for the discord channel you plan on managing your ed server from. I recommend creating a specific channel for this with a custom discord role for access. You will also need your eldewrito server connection info and rcon credentials. If you would like discord mentions if players type keywords in chat you can enable this by providing your discord user id. See the sample config below for more info.
 
 ```
 ###########################  Config  ###################################
@@ -28,11 +23,11 @@ keywords = ['admin', 'hack', 'hacker', 'server', 'Admin'] #Keywords you would li
 ##########################  Config  ###################################
 ```
 
-Once connected your discord channel will be linked with the Eldewrito server chat. You can also run any of the following commands below by prefacing them with '!'. For example:
+Once connected your discord channel will be linked with the Eldewrito server chat. Everything in this channel will be sent to the ed server chat and vise versa. You can also manage your eldewrito server with any of the following commands below by prefacing them with '!'. Bear in mind anyone with access to the discord channel will have access to these commands. Enjoy!
+
+Example:
 
 !server.listplayers
-
-Enjoy!
 
 ## Sample commands:
 ```Server.AddBan - Adds to the ban list (does NOT kick anyone)
