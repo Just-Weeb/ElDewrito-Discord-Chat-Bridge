@@ -71,14 +71,20 @@ class MyClient(discord.Client):
         print('------')
 
     async def on_message(self, message):
-        #We do not want the bot to reply to itself
+        # we do not want the bot to reply to itself
         if message.author.id == self.user.id:
+            #await message.channel.send('bot name detected')
             return
-        elif message.author.name == botName: 
+        elif message.author.name == botName: #Change zerogravity to the name of your discord bot
+            #This is for future ability to chat both ways. Prevents infinite loop of bot chat.
             return
-        elif message.channel.name != discordChan:
+        elif message.channel.name != discordChan: #Name of the channel you want to forward to the ed server
             return
+        elif '!' in message.content[0]:
+            ws.send(message.content[1:])
+            print(message.content[1:])
         else:
+            #await message.channel.send('sent message!')
             try:
                 ws.send('server.say <discord>{0.author}:{0.content}'.format(message))
             except Exception as e:
@@ -86,4 +92,4 @@ class MyClient(discord.Client):
                 connectSock()
 
 client = MyClient()
-client.run(apiToken) 
+client.run(apiToken)
