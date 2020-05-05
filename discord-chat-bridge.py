@@ -11,7 +11,7 @@ port = '11776' #Eldewrito server rcon port
 apiToken = '' #Your discord bot API token
 botName = '' #The name you gave your webhook bot. This is import or else the chat bridge will enter a spam loop
 discordChan = '' #Channel you want to bridge to your Eldewrito server
-serverAdmin = '<@12347856834562354>' #your user id if you want notifications enabled (You will have to turn on discord developer mode to get this. Role ID's work as well.)
+serverAdmin = '<@12345678910111213>' #your user id if you want notifications enabled (You will have to turn on discord developer mode to get this. Role ID's work as well.)
 webHook = '' #Discord server webhook url
 keywords = ['admin', 'hack', 'hacker', 'server', 'Admin'] #Keywords you would like to be notified on
 ##########################  Config  ###################################
@@ -73,12 +73,10 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         #We do not want the bot to reply to itself
         if message.author.id == self.user.id:
-            #Await message.channel.send('bot name detected')
             return
-        elif message.author.name == botName: #Change zerogravity to the name of your discord bot
-            #This is for future ability to chat both ways. Prevents infinite loop of bot chat.
+        elif message.author.name == botName: 
             return
-        elif message.channel.name != discordChan: #Name of the channel you want to forward to the ed server
+        elif message.channel.name != discordChan:
             return
         else:
             try:
@@ -88,4 +86,4 @@ class MyClient(discord.Client):
                 connectSock()
 
 client = MyClient()
-client.run(apiToken) #Discord api token goes here
+client.run(apiToken) 
