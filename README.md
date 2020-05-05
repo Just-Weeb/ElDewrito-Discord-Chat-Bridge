@@ -1,4 +1,4 @@
-# ElDewrito-Rcon-Python-Example
+# ElDewrito Discord Chat Bridge and rcon interface.
 Example python client for the ElDewrito server.
 
 ```shell
