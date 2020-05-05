@@ -5,18 +5,19 @@ from discord_webhook import DiscordWebhook
 
 
 ###########################  Config  ###################################
-password = '' #ed rcon password
-server = '' #ed server address
-port = '11776' #ed server rcon port
-apiToken = '' #Discord bot token
-botName = '' #name you gave the webhook. This is important as it prevents the chat from entering a spam loop
-discordChan = '' #discord channel you want to bridge
-serverAdmin = '' #if anyone mentions anything in keyword list notify the server admin in discord
-webHook = '' #Webhook url for the bot you created
-###########################  Config  ###################################
+password = '' #Eldewrito server rcon password
+server = '' #Eldewrito server address
+port = '11776' #Eldewrito server rcon port
+apiToken = '' #Your discord bot API token
+botName = '' #The name you gave your webhook bot. This is import or else the chat bridge will enter a spam loop
+discordChan = '' #Channel you want to bridge to your Eldewrito server
+serverAdmin = '<@12347856834562354>' #your user id if you want notifications enabled (You will have to turn on discord developer mode to get this. Role ID's work as well.)
+webHook = '' #Discord server webhook url
+keywords = ['admin', 'hack', 'hacker', 'server', 'Admin'] #Keywords you would like to be notified on
+##########################  Config  ###################################
 
 
-#build our dewrito rcon connection
+#Build our dewrito rcon connection
 def connectSock():
     try:
         global ws
@@ -28,11 +29,11 @@ def connectSock():
         print("Failed to connect.")
         print(e)
 
-#initiate our dewrito rcon connection
+#Initiate our dewrito rcon connection
 connectSock()
 
 
-#thread to handle sending messages from dewrito to discord
+#Thread to handle sending messages from dewrito to discord
 def chatTX():
     while True:
         try:
@@ -47,16 +48,21 @@ def chatTX():
             continue
 
         else:
+            for x in keywords:
+                if x in result:
+                    result = result + ' ' + serverAdmin
+                    break
+
             webhook = DiscordWebhook(url=webHook, content=result)
             response = webhook.execute()
 
 
-#start our dewrito to discord bridge, this is super jank but seems to be reliable
+#Start our dewrito to discord bridge
 x = threading.Thread(target=chatTX)
 x.start()
 
 
-#start our discord to dewrito bridge
+#Start our discord to dewrito bridge
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged in as')
@@ -65,9 +71,9 @@ class MyClient(discord.Client):
         print('------')
 
     async def on_message(self, message):
-        # we do not want the bot to reply to itself
+        #We do not want the bot to reply to itself
         if message.author.id == self.user.id:
-            #await message.channel.send('bot name detected')
+            #Await message.channel.send('bot name detected')
             return
         elif message.author.name == botName: #Change zerogravity to the name of your discord bot
             #This is for future ability to chat both ways. Prevents infinite loop of bot chat.
@@ -75,7 +81,6 @@ class MyClient(discord.Client):
         elif message.channel.name != discordChan: #Name of the channel you want to forward to the ed server
             return
         else:
-            #await message.channel.send('sent message!')
             try:
                 ws.send('server.say <discord>{0.author}:{0.content}'.format(message))
             except Exception as e:
@@ -83,4 +88,4 @@ class MyClient(discord.Client):
                 connectSock()
 
 client = MyClient()
-client.run(apiToken)
+client.run(apiToken) #Discord api token goes here
