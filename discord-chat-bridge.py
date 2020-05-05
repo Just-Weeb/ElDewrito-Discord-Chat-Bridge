@@ -4,8 +4,6 @@ from websocket import create_connection
 from discord_webhook import DiscordWebhook
 
 
-
-
 ###########################  Config  ###################################
 password = '' #ed rcon password
 server = '' #ed server address
@@ -15,8 +13,7 @@ botName = '' #name you gave the webhook. This is important as it prevents the ch
 discordChan = '' #discord channel you want to bridge
 serverAdmin = '' #if anyone mentions anything in keyword list notify the server admin in discord
 webHook = '' #Webhook url for the bot you created
-##########################  Config  ###################################
-
+###########################  Config  ###################################
 
 
 #build our dewrito rcon connection
@@ -54,7 +51,7 @@ def chatTX():
             response = webhook.execute()
 
 
-#start our dewrito to discord bridge
+#start our dewrito to discord bridge, this is super jank but seems to be reliable
 x = threading.Thread(target=chatTX)
 x.start()
 
