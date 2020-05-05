@@ -1,10 +1,38 @@
 # ElDewrito Discord Chat Bridge and rcon interface.
-Example python client for the ElDewrito server.
 
 ```shell
-pip install -r requirements.txt
+pip3 install -r requirements.txt
+```
+DISCLAIMER: There is a lot of sensitive information stored in this script and it is intended as a proof of concept. Users will have to  accept all risks when running this.
+
+You will need a discord bot api token and webhook url for the channel you plan on managing your ed server from. In addition you will need your server connection info and rcon credentials. 
+
+To create a webhook for your chat channel please follow:
+https://help.dashe.io/en/articles/2521940-how-to-create-a-discord-webhook-url
+
+You can create a bot and obtain an api token here:
+https://discord.com/developers/applications
+
+
+```
+###########################  Config  ###################################
+password = '' #Eldewrito server rcon password
+server = '' #Eldewrito server address
+port = '11776' #Eldewrito server rcon port
+apiToken = '' #Your discord bot API token
+botName = '' #The name you gave your webhook bot. This is import or else the chat bridge will enter a spam loop
+discordChan = '' #Channel you want to bridge to your Eldewrito server
+serverAdmin = '<@12345678910111213>' #your user id if you want notifications enabled (You will have to turn on discord developer mode to get this. Role ID's work as well.)
+webHook = '' #Discord server webhook url
+keywords = ['admin', 'hack', 'hacker', 'server', 'Admin'] #Keywords you would like to be notified on
+##########################  Config  ###################################
 ```
 
+Once connected your discord channel will be linked with the Eldewrito server chat. You can also run any of the following commands below by prefacing them with '!'. For example:
+
+!server.listplayers
+
+Enjoy!
 
 ## Sample commands:
 ```Server.AddBan - Adds to the ban list (does NOT kick anyone)
