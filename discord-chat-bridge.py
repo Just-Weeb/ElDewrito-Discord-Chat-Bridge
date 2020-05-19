@@ -40,7 +40,7 @@ def chatTX():
             result =  ws.recv()
         except:
             connectSock()
-            continue
+            break
 
         result = result.strip('<SERVER/0000000000000000/127.0.0.1>')
 
