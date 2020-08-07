@@ -3,7 +3,7 @@
 ```shell
 pip3 install -r requirements.txt
 
-python3 discord-chat-bridge.py
+python3 discord-chat-bridge.py config.yml
 ```
 DISCLAIMER: There is a lot of sensitive information stored in this script and it is intended as a proof of concept. Users will have to  accept all risks when running this.
 

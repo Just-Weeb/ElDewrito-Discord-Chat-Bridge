@@ -3,16 +3,27 @@ import time
 import threading
 from websocket import create_connection
 from discord_webhook import DiscordWebhook
+import yaml
+import sys
 
+#quick check for YAML config file
+if len(sys.argv) != 2:
+    raise ValueError('Please provide config file')
+
+#reading in config file to variable. Probably should do some input verification to prevent bad data being passed in
+with open(sys.argv[1], "r") as ymlfile:
+    cfg = yaml.load(ymlfile)
+
+#assuming all config variables were entered in the yaml file
 ###########################  <Config>  ###################################
-password = '' #ed management password
-server = '' #ed server address
-port = '11776'
-apiToken = '' #discord bot token
-botName = '' #WEBHOOK NAME MUST MATCH BOT NAME
-discordChan = 'rcon' #Channel you have configured the webhook on 
-serverAdmin = '' #if anyone mentions a keyword notify the server admin in discord
-webHook = '' #webhook url
+password = cfg["password"] #ed management password
+server = cfg["server"] #ed server address
+port = cfg["port"]
+apiToken = cfg["apiToken"] #discord bot token
+botName = cfg["botName"] #WEBHOOK NAME MUST MATCH BOT NAME
+discordChan = cfg["discordChan"] #Channel you have configured the webhook on 
+serverAdmin = cfg["serverAdmin"] #if anyone mentions a keyword notify the server admin in discord
+webHook = cfg["webHook"] #webhook url
 ###########################  </Config>  ###################################
 
 keywords = ['admin', 'hack', 'hacker', 'server', 'Admin']
@@ -64,7 +75,7 @@ def motd():
     while True:
 
         try:
-            ws.send("server.say Join us on discord! <discord link here>")
+            ws.send("server.say Join us on discord! https://discord.gg/NxDpq2Z")
 
         except:
             continue
@@ -102,7 +113,7 @@ async def on_message(message):
 
     else:
         try:
-            ws.send('server.say <discord>{0.author}:{0.content}'.format(message))
+            ws.send('server.say {0.author.name}: {0.content}'.format(message))
         except Exception as e:
             print('Failed to connect, retrying...')
             connectSock()

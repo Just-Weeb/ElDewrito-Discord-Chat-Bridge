@@ -1,3 +1,4 @@
 discord 
 discord-webhook 
 websocket-client
+PyYAML
