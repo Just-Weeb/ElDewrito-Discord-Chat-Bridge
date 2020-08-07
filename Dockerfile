@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./discord-chat-bridge.py", $CONFIG_FILE ]
+CMD python ./discord-chat-bridge.py $CONFIG_FILE
