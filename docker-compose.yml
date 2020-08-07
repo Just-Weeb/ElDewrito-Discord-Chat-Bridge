@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  discordRcon1:
+    image: hkwebmaster/ed-discord-rcon:latest
+    restart: always
+    environment:
+      - CONFIG_FILE=/home/pi/edrcon/server1/config.yml
+
+  discordRcon2:
+    image: hkwebmaster/ed-discord-rcon:latest
+    restart: always
+    environment:
+      - CONFIG_FILE=/home/pi/edrcon/server2/config.yml
+
