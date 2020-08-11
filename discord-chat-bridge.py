@@ -46,7 +46,7 @@ def chatTX():
         if '<discord>' in result:
             continue
 
-        elif 'Join us on discord!' in result:
+        elif motd_msg in result:
             continue
 
         else:
