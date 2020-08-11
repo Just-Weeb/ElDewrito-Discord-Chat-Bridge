@@ -4,12 +4,16 @@ services:
   discordRcon1:
     image: hkwebmaster/ed-discord-rcon:latest
     restart: always
+    volumes:
+      - ./config:/config
     environment:
-      - CONFIG_FILE=server1config.yml
+      - CONFIG_FILE=./config/server1config.yml
 
   discordRcon2:
     image: hkwebmaster/ed-discord-rcon:latest
     restart: always
+    volumes:
+      - ./config:/config
     environment:
-      - CONFIG_FILE=server2config.yml
+      - CONFIG_FILE=./config/server2config.yml
 
