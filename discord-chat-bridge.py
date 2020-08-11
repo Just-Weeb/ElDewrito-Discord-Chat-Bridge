@@ -11,8 +11,9 @@ port = '11776'
 apiToken = '' #discord bot token
 botName = '' #WEBHOOK NAME MUST MATCH BOT NAME
 discordChan = 'rcon' #Channel you have configured the webhook on 
-serverAdmin = '' #if anyone mentions a keyword notify the server admin in discord
+serverAdmin = '' #if anyone mentions a keyword notify the server admin in discord. Format is <@useridhere> for users and <@&roleidhere> for roles.
 webHook = '' #webhook url
+motd_msg = '' #Any message you would like to be sent on a 30 minute loop to the ed chat
 ###########################  </Config>  ###################################
 
 keywords = ['admin', 'hack', 'hacker', 'server', 'Admin']
@@ -29,9 +30,7 @@ def connectSock():
         print("Failed to connect.")
         print(e)
 
-#initiate our dewrito rcon connection
 connectSock()
-
 
 #thread to handle sending messages from dewrito to discord
 def chatTX():
@@ -56,15 +55,18 @@ def chatTX():
                     result = result + ' ' + serverAdmin
                     break
 
-            webhook = DiscordWebhook(url=webHook, content=result)
-            response = webhook.execute()
+            try:
+                webhook = DiscordWebhook(url=webHook, content=result)
+                response = webhook.execute()
+
+            except:
+                print("Discord webhook rate limit reached!")
 
 
 def motd():
     while True:
-
         try:
-            ws.send("server.say Join us on discord! <discord link here>")
+            ws.send("server.say " + motd_msg)
 
         except:
             continue
@@ -102,7 +104,7 @@ async def on_message(message):
 
     else:
         try:
-            ws.send('server.say <discord>{0.author}:{0.content}'.format(message))
+            ws.send('server.say {0.author}:{0.content}'.format(message))
         except Exception as e:
             print('Failed to connect, retrying...')
             connectSock()
