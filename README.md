@@ -18,7 +18,7 @@ discordChan = '' #Channel you want to bridge to your Eldewrito server
 serverAdmin = '<@12345678910111213>' #your user id if you want notifications enabled (You will have to turn on discord developer mode to get this. Role ID's work as well.)
 webHook = '' #Discord server webhook url
 keywords = ['admin', 'hack', 'hacker', 'server', 'Admin'] #Keywords you would like to be notified on
-motd_msg = '' #
+motd_msg = '' #msg to run on a 30 minute loop for the ed game chat
 ##########################  Config  ###################################
 ```
 
