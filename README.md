@@ -1,9 +1,7 @@
 # ElDewrito Discord Chat Bridge and rcon interface.
 
 ```shell
-pip3 install -r requirements.txt
-
-python3 discord-chat-bridge.py
+sudo ./build.sh
 ```
 DISCLAIMER: There is a lot of sensitive information stored in this script and it is intended as a proof of concept. Users will have to  accept all risks when running this.
 
@@ -20,6 +18,7 @@ discordChan = '' #Channel you want to bridge to your Eldewrito server
 serverAdmin = '<@12345678910111213>' #your user id if you want notifications enabled (You will have to turn on discord developer mode to get this. Role ID's work as well.)
 webHook = '' #Discord server webhook url
 keywords = ['admin', 'hack', 'hacker', 'server', 'Admin'] #Keywords you would like to be notified on
+motd_msg = '' #
 ##########################  Config  ###################################
 ```
 
