@@ -8,18 +8,17 @@ DISCLAIMER: There is a lot of sensitive information stored in this script and it
 You will need a discord bot api token and webhook url for the discord channel you plan on managing your ed server from. I recommend creating a specific channel for this with a custom discord role for access. You will also need your eldewrito server connection info and rcon credentials. If you would like discord mentions if players type keywords in chat you can enable this by providing your discord user id. See the sample config below for more info.
 
 ```
-###########################  Config  ###################################
-password = '' #Eldewrito server rcon password
-server = '' #Eldewrito server address
-port = '11776' #Eldewrito server rcon port
-apiToken = '' #Your discord bot API token
-botName = '' #The name you gave your webhook bot. This is import or else the chat bridge will enter a spam loop
-discordChan = '' #Channel you want to bridge to your Eldewrito server
-serverAdmin = '<@12345678910111213>' #your user id if you want notifications enabled (You will have to turn on discord developer mode to get this. Role ID's work as well.)
-webHook = '' #Discord server webhook url
-keywords = ['admin', 'hack', 'hacker', 'server', 'Admin'] #Keywords you would like to be notified on
-motd_msg = '' #msg to run on a 30 minute loop for the ed game chat
-##########################  Config  ###################################
+###########################  <Config>  ###################################
+password = '' #ed management password
+server = '' #ed server address
+port = '11776'
+apiToken = '' #discord bot token
+botName = '' #WEBHOOK NAME MUST MATCH BOT NAME
+discordChan = 'rcon' #Channel you have configured the webhook on 
+serverAdmin = '' #if anyone mentions a keyword notify the server admin in discord. Format is <@useridhere> for users and <@&roleidhere> for roles.
+webHook = '' #webhook url
+motd_msg = '' #Any message you would like to be sent on a 30 minute loop to the ed chat
+###########################  </Config>  ###################################
 ```
 
 Once connected your discord channel will be linked with the Eldewrito server chat. Everything in this channel will be sent to the ed server chat and vise versa. You can also manage your eldewrito server with any of the following commands below by prefacing them with '!'. Bear in mind anyone with access to the discord channel will have access to these commands. Enjoy!
