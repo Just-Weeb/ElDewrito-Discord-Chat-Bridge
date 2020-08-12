@@ -28,7 +28,10 @@ Example:
 !server.listplayers
 
 ## Sample commands:
-```Server.AddBan - Adds to the ban list (does NOT kick anyone)
+```
+!playerstats
+!serverstats
+Server.AddBan - Adds to the ban list (does NOT kick anyone)
 Server.Announce - Announces this server to the master servers
 Server.AssassinationEnabled 0 - Controls whether assassinations are enabled on the server
 Server.BottomlessClipEnabled 0 - Controls whether bottomless clip is enabled on the server
