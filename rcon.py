@@ -1,24 +1,28 @@
 import discord
 import time
 import threading
+import urllib.request
+import json
 from websocket import create_connection
 from discord_webhook import DiscordWebhook
 
-###########################  <Config>  ###################################
+
+###########################  Config  ###################################
 password = '' #ed management password
 server = '' #ed server address
-port = '11776'
-apiToken = '' #discord bot token
-botName = '' #WEBHOOK NAME MUST MATCH BOT NAME
-discordChan = 'rcon' #Channel you have configured the webhook on 
-serverAdmin = '' #if anyone mentions a keyword notify the server admin in discord. Format is <@useridhere> for users and <@&roleidhere> for roles.
-webHook = '' #webhook url
-motd_msg = '' #Any message you would like to be sent on a 30 minute loop to the ed chat
-###########################  </Config>  ###################################
+port = '11776' #server port
+apiToken = '' #discord bot api token
+botName = '' #Webhook name MUST match bot name
+discordChan = 'rcon' #Discord channel name you want to manage from
+serverAdmin = '<@&roleIDnumber>' #if anyone mentions hack or admin keyword notify the server admin role in discord
+webHook = 'https://discordapp.com/api/webhooks/'
+motd_msg = 'Join us on discord! discord.gg'
+dew_api = 'http://yourserverip:11775'
+##########################  Config  ###################################
 
 keywords = ['admin', 'hack', 'hacker', 'server', 'Admin']
 
-#Build our dewrito rcon connection
+#build our dewrito rcon connection
 def connectSock():
     try:
         global ws
@@ -26,10 +30,12 @@ def connectSock():
         print("Connected!")
         ws.send(password)
         print("Authenticated!")
+
     except Exception as e:
         print("Failed to connect.")
         print(e)
 
+#initiate our dewrito rcon connection
 connectSock()
 
 #thread to handle sending messages from dewrito to discord
@@ -60,26 +66,67 @@ def chatTX():
                 response = webhook.execute()
 
             except:
-                print("Discord webhook rate limit reached!")
+                print("Discord webhook rate limit reached! (probably)")
+
+def server_meta():
+    try:
+        with urllib.request.urlopen(dew_api) as url:
+            data = json.loads(url.read().decode())
+
+        payload = "Players: {}, Status: {},  Map: {}, GameType: {}".format(data["numPlayers"], data["status"], data["map"], data["variant"])
+
+        try:
+            webhook = DiscordWebhook(url=webHook, content=payload)
+            response = webhook.execute()
+
+        except:
+            print("Failed to connect to the discord webhook url.")
+
+    except:
+        print("Could not connect to the dewrito meta data api.")
+
+
+def player_meta():
+    players = ["```"]
+
+    try:
+        with urllib.request.urlopen(dew_api) as url:
+            data = json.loads(url.read().decode())
+
+        for player in data["players"]:
+            players.append("{} - Alive: {}, Kills: {}, Deaths: {}, Betrayals: {}, Suicides: {}".format(player["name"], player["isAlive"], player["kills"], player["deaths"], player["betrayals"], player["suicides"]))
+
+        players.append("```")
+
+        players = "\n".join(players)
+
+        try:
+            webhook = DiscordWebhook(url=webHook, content=str(players))
+            response = webhook.execute()
+
+        except:
+            print("Failed to connect to the discord webhook url.")
+
+    except:
+        print("Could not connect to the dewrito meta data api.")
 
 
 def motd():
     while True:
+        time.sleep(1800)
         try:
             ws.send("server.say " + motd_msg)
 
         except:
             continue
 
-        time.sleep(1800)
-
-#start our dewrito to discord bridge
+            
 x = threading.Thread(target=chatTX)
 x.start()
 
-#MOTD thread
 y = threading.Thread(target=motd)
 y.start()
+
 
 client = discord.Client()
 
@@ -99,13 +146,21 @@ async def on_message(message):
         return
 
     elif '!' in message.content[0]:
-        ws.send(message.content[1:])
-        print(message.content[1:])
+        if message.content[1:] == "serverstats":
+            server_meta()
+
+        elif message.content[1:] == "playerstats":
+            player_meta()
+
+        else:
+            ws.send(message.content[1:])
+            print(message.content[1:])
 
     else:
         try:
             ws.send('server.say {0.author}:{0.content}'.format(message))
-        except Exception as e:
+
+        except:
             print('Failed to connect, retrying...')
             connectSock()
 
