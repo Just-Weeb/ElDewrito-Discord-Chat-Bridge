@@ -1,9 +1,0 @@
-
-password: "rconpasswordhere"
-server: "ServerIpHere"
-port: "RconPortHere"
-apiToken: "DiscordAPITokenHere"
-botName: "Bot&WebhookNameHere"
-discordChan: "DiscordChannelNameHere" 
-serverAdmin: "<@UserID/RoleID>"
-webHook: "WebhookUrlHere"
